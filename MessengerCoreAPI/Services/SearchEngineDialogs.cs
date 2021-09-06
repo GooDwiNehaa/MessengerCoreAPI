@@ -12,7 +12,8 @@ namespace MessengerCoreAPI.Services
         {
             var articipants = clientsDialogs
                 .GroupBy(cd => cd.IDRGDialog)
-                .Where(g => g.All(cd => clientsIds.Contains(cd.IDClient)))
+                .Where(g => g.All(cd => clientsIds.Contains(cd.IDClient)) &&
+                g.Select(cd => cd.IDClient).Distinct().Count() == clientsIds.Count())
                 .FirstOrDefault()?
                 .FirstOrDefault();
 
